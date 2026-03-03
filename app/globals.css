@@ -335,37 +335,122 @@ main {
   margin: 0;
 }
 
-.snippets-wrap {
+.snippet-showcase {
   display: grid;
-  gap: 0.9rem;
-  max-height: 68vh;
-  overflow-y: auto;
-  padding-right: 0.2rem;
-  scroll-snap-type: y mandatory;
+  gap: 1.4rem;
 }
 
-.snippet-card {
-  scroll-snap-align: start;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  background: #ffffff;
-  padding: 0.7rem;
+.snippet-head {
+  max-width: 740px;
 }
 
-.snippet-meta h3 {
+.snippet-line {
+  width: 84px;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(120deg, #6f5cff, #4d8dff);
+  margin: 0.7rem 0;
+}
+
+.snippet-intro {
+  max-width: 66ch;
+  line-height: 1.6;
+}
+
+.snippet-stack {
+  display: grid;
+  gap: 1.7rem;
+}
+
+.snippet-row {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) minmax(300px, 1.05fr);
+  gap: 1.4rem;
+  align-items: center;
+  padding: 0.8rem 0;
+  border-top: 1px solid rgba(116, 126, 255, 0.14);
+}
+
+.snippet-row.reverse {
+  grid-template-columns: minmax(300px, 1.05fr) minmax(260px, 1fr);
+}
+
+.snippet-row.reverse .snippet-copy {
+  order: 2;
+}
+
+.snippet-row.reverse .snippet-media-shell {
+  order: 1;
+}
+
+.snippet-copy {
+  padding-right: 0.6rem;
+}
+
+.snippet-tag {
+  display: inline-flex;
+  font-size: 0.7rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #5d56d9;
+  border: 1px solid rgba(111, 92, 255, 0.25);
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+  background: rgba(232, 236, 255, 0.85);
+}
+
+.snippet-copy h3 {
+  margin: 0.72rem 0 0.5rem;
+  font-size: clamp(1.3rem, 2.2vw, 2rem);
+  line-height: 1.1;
+}
+
+.snippet-copy h3 span {
+  color: #4d63ff;
+}
+
+.snippet-copy p {
   margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 50ch;
 }
 
-.snippet-meta p {
-  margin: 0.3rem 0 0.6rem;
-  color: var(--muted);
+.snippet-media-shell {
+  border-radius: 20px;
+  border: 1px solid rgba(116, 126, 255, 0.22);
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.95), rgba(241, 245, 255, 0.94));
+  padding: 0.7rem;
+  box-shadow: 14px 14px 0 rgba(54, 71, 155, 0.08), 0 16px 30px rgba(81, 97, 178, 0.16);
 }
 
 .snippet-video {
   width: 100%;
-  max-height: 380px;
+  height: 100%;
+  max-height: 340px;
   object-fit: cover;
-  border-radius: 12px;
-  border: 1px solid var(--border);
+  border-radius: 14px;
+  border: 1px solid rgba(116, 126, 255, 0.2);
   background: #eef2ff;
+}
+
+@media (max-width: 900px) {
+  .snippet-row,
+  .snippet-row.reverse {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .snippet-row.reverse .snippet-copy,
+  .snippet-row.reverse .snippet-media-shell {
+    order: initial;
+  }
+
+  .snippet-copy {
+    padding-right: 0;
+  }
+
+  .snippet-media-shell {
+    box-shadow: 0 10px 26px rgba(81, 97, 178, 0.14);
+  }
 }

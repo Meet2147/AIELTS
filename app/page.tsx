@@ -47,10 +47,6 @@ export default function HomePage() {
       </section>
 
       <section className="card" style={{ marginTop: "1rem" }}>
-        <div className="row between" style={{ marginBottom: "0.6rem" }}>
-          <h2 className="section-title">App Snippets</h2>
-          <span className="muted">Scroll vertically</span>
-        </div>
         <HomeSnippets />
       </section>
     </div>
