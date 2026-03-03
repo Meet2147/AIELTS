@@ -1,10 +1,11 @@
-import { randomBytes, randomUUID, scryptSync, timingSafeEqual } from "node:crypto";
+import { createHash, randomBytes, randomUUID, scryptSync, timingSafeEqual } from "node:crypto";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { getDb } from "@/lib/db";
 
 const SESSION_COOKIE = "ep_session";
 const SESSION_DAYS = 14;
+const RESET_TOKEN_MINUTES = 30;
 
 type UserRow = {
   id: string;
@@ -23,6 +24,14 @@ function nowIso() {
 
 function sessionExpiryIso() {
   return new Date(Date.now() + SESSION_DAYS * 24 * 60 * 60 * 1000).toISOString();
+}
+
+function resetExpiryIso() {
+  return new Date(Date.now() + RESET_TOKEN_MINUTES * 60 * 1000).toISOString();
+}
+
+function hashResetToken(token: string) {
+  return createHash("sha256").update(token).digest("hex");
 }
 
 export function hashPassword(password: string) {
@@ -141,4 +150,59 @@ export async function logoutCurrentSession() {
   }
 
   await clearSessionCookie();
+}
+
+export function createPasswordResetToken(email: string, baseUrl: string) {
+  const user = findUserByEmail(email);
+  if (!user) return null;
+
+  const db = getDb();
+  const token = randomBytes(32).toString("base64url");
+  const tokenHash = hashResetToken(token);
+  const expiresAt = resetExpiryIso();
+
+  db.prepare("delete from password_resets where user_id = ?").run(user.id);
+  db.prepare(
+    "insert into password_resets (token_hash, user_id, expires_at, used_at, created_at) values (?, ?, ?, null, ?)"
+  ).run(tokenHash, user.id, expiresAt, nowIso());
+
+  return `${baseUrl.replace(/\/$/, "")}/reset-password?token=${encodeURIComponent(token)}`;
+}
+
+export function resetPasswordWithToken(token: string, newPassword: string) {
+  const db = getDb();
+  const tokenHash = hashResetToken(token);
+
+  const resetRow = db
+    .prepare(
+      "select token_hash, user_id, expires_at, used_at from password_resets where token_hash = ?"
+    )
+    .get(tokenHash) as
+    | { token_hash: string; user_id: string; expires_at: string; used_at: string | null }
+    | undefined;
+
+  if (!resetRow) {
+    return { success: false, error: "Invalid reset token." } as const;
+  }
+
+  if (resetRow.used_at) {
+    return { success: false, error: "Reset token already used." } as const;
+  }
+
+  if (new Date(resetRow.expires_at).getTime() < Date.now()) {
+    db.prepare("delete from password_resets where token_hash = ?").run(tokenHash);
+    return { success: false, error: "Reset token expired. Request a new one." } as const;
+  }
+
+  const passwordHash = hashPassword(newPassword);
+
+  const tx = db.transaction(() => {
+    db.prepare("update users set password_hash = ? where id = ?").run(passwordHash, resetRow.user_id);
+    db.prepare("update password_resets set used_at = ? where token_hash = ?").run(nowIso(), tokenHash);
+    db.prepare("delete from sessions where user_id = ?").run(resetRow.user_id);
+  });
+
+  tx();
+
+  return { success: true } as const;
 }

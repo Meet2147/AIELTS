@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -72,7 +73,13 @@ export default function LoginPage() {
         </button>
       </div>
 
-      {message ? <p style={{ marginTop: "0.8rem", color: "#ffd3dc" }}>{message}</p> : null}
+      {mode === "login" ? (
+        <p style={{ marginTop: "0.8rem" }}>
+          <Link href="/forgot-password" style={{ color: "#4d63ff" }}>Forgot password?</Link>
+        </p>
+      ) : null}
+
+      {message ? <p style={{ marginTop: "0.8rem", color: "#d04b7b" }}>{message}</p> : null}
     </section>
   );
 }

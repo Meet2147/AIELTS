@@ -43,6 +43,18 @@ function migrate(db: DatabaseInstance) {
     );
 
     create index if not exists idx_attempts_user_created on exam_attempts(user_id, created_at desc);
+
+    create table if not exists password_resets (
+      token_hash text primary key,
+      user_id text not null,
+      expires_at text not null,
+      used_at text,
+      created_at text not null default (datetime('now')),
+      foreign key(user_id) references users(id) on delete cascade
+    );
+
+    create index if not exists idx_password_resets_user on password_resets(user_id);
+    create index if not exists idx_password_resets_expires on password_resets(expires_at);
   `);
 }
 
