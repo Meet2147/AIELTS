@@ -7,12 +7,12 @@ export default function HomePage() {
     <div className="home-page">
       <section className="hero home-hero">
         <div className="row between" style={{ alignItems: "flex-start" }}>
-          <p className="kicker" style={{ margin: 0 }}>All-in-one AI exam prep</p>
+          <p className="kicker" style={{ margin: 0 }}>Coachly AI prep suite</p>
           <Link className="button" href="/dashboard">Get Started</Link>
         </div>
 
         <h1 className="hero-title" style={{ marginTop: "0.4rem" }}>
-          Master <TypeCycle /> with one modern prep app.
+          Master <TypeCycle /> with Coachly.
         </h1>
 
         <p className="hero-sub">

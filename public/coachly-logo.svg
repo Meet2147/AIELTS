@@ -1,0 +1,21 @@
+<svg width="640" height="160" viewBox="0 0 640 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="coachlyGrad" x1="20" y1="20" x2="140" y2="140" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8B7CFF"/>
+      <stop offset="0.52" stop-color="#6F5CFF"/>
+      <stop offset="1" stop-color="#4D8DFF"/>
+    </linearGradient>
+    <linearGradient id="textGrad" x1="176" y1="36" x2="560" y2="124" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4F42DD"/>
+      <stop offset="0.58" stop-color="#646FFF"/>
+      <stop offset="1" stop-color="#4D8DFF"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="16" y="16" width="128" height="128" rx="32" fill="url(#coachlyGrad)"/>
+  <rect x="30" y="30" width="100" height="100" rx="26" fill="rgba(255,255,255,0.20)"/>
+  <path d="M68 50L46 80L68 110" stroke="white" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="84" y="74" width="32" height="12" rx="6" fill="white"/>
+
+  <text x="178" y="102" font-family="Satoshi, Plus Jakarta Sans, Avenir Next, sans-serif" font-size="74" font-weight="800" fill="url(#textGrad)">Coachly</text>
+</svg>
