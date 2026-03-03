@@ -1,40 +1,57 @@
 import Link from "next/link";
+import { HomeSnippets } from "@/lib/components/home-snippets";
+import { TypeCycle } from "@/lib/components/type-cycle";
 
 export default function HomePage() {
   return (
-    <div className="grid" style={{ gap: "1.2rem" }}>
-      <section className="hero">
-        <p className="kicker">All-in-one AI exam prep</p>
-        <h1 className="hero-title">Crack IELTS, TOEFL, and GRE with instant, rubric-based feedback.</h1>
-        <p className="hero-sub">
-          Practice writing, listening, and speaking with Sonar-powered scoring, clear weak-area insights,
-          and a dashboard that feels like a learning game, not a boring test portal.
-        </p>
-        <div className="badges" style={{ marginBottom: "0.8rem" }}>
-          <span className="badge">Live Speaking AV Stream</span>
-          <span className="badge">IELTS Listening Module</span>
-          <span className="badge">AI Rubric Feedback</span>
-          <span className="badge">Progress Tracker</span>
+    <div className="home-page">
+      <section className="hero home-hero">
+        <div className="row between" style={{ alignItems: "flex-start" }}>
+          <p className="kicker" style={{ margin: 0 }}>All-in-one AI exam prep</p>
+          <Link className="button" href="/dashboard">Get Started</Link>
         </div>
-        <div className="row">
-          <Link className="button" href="/dashboard">Start Practicing</Link>
-          <Link className="button secondary" href="/pricing">View Plans</Link>
+
+        <h1 className="hero-title" style={{ marginTop: "0.4rem" }}>
+          Master <TypeCycle /> with one modern prep app.
+        </h1>
+
+        <p className="hero-sub">
+          Practice, get instant feedback, and track score growth across writing, speaking, and listening.
+          Built for fast progress and demo-ready results.
+        </p>
+
+        <div className="badges" style={{ marginTop: "0.7rem" }}>
+          <span className="badge">AI Rubric Scoring</span>
+          <span className="badge">Live Speaking Transcription</span>
+          <span className="badge">Pricing + Checkout</span>
+          <span className="badge">Progress Dashboard</span>
         </div>
       </section>
 
-      <section className="grid cols-3">
-        <article className="card solid">
-          <h3 style={{ marginTop: 0 }}>Daily Momentum</h3>
-          <p className="muted">Short focused practice blocks with immediate scoring to keep streaks alive.</p>
-        </article>
-        <article className="card solid">
-          <h3 style={{ marginTop: 0 }}>Exam-Accurate Rubrics</h3>
-          <p className="muted">Feedback is structured by official section expectations and score bands.</p>
-        </article>
-        <article className="card solid">
-          <h3 style={{ marginTop: 0 }}>Demo-Ready Dashboard</h3>
-          <p className="muted">Clean UI with recent attempts and section-level score summaries.</p>
-        </article>
+      <section className="card" style={{ marginTop: "1rem" }}>
+        <h2 className="section-title" style={{ marginBottom: "0.4rem" }}>Features</h2>
+        <div className="grid cols-3">
+          <article className="card solid feature-tile">
+            <h3>Smart Writing Coach</h3>
+            <p className="muted">Instant exam-style feedback with actionable improvements.</p>
+          </article>
+          <article className="card solid feature-tile">
+            <h3>Listening + Speaking</h3>
+            <p className="muted">Audio prompts, live AV stream, and automatic transcription flow.</p>
+          </article>
+          <article className="card solid feature-tile">
+            <h3>One Prep Command Center</h3>
+            <p className="muted">Track attempts and jump across IELTS, TOEFL, GRE modules quickly.</p>
+          </article>
+        </div>
+      </section>
+
+      <section className="card" style={{ marginTop: "1rem" }}>
+        <div className="row between" style={{ marginBottom: "0.6rem" }}>
+          <h2 className="section-title">App Snippets</h2>
+          <span className="muted">Scroll vertically</span>
+        </div>
+        <HomeSnippets />
       </section>
     </div>
   );
